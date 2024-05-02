@@ -44,15 +44,45 @@ class Graph {
 
   // this function returns an array of Node values using DFS
   depthFirstSearch(start) {
-    const res = [];
     const seen = [];
-    let cur = start;
+    const stack = [start]
+    let cur;
 
-    
+    while (stack.length > 0) {
+      cur = stack.shift();
+      seen.push(cur.value);
+
+      for (let node of cur.adjacent) {
+        if (!seen.includes(node.value) && !stack.includes(node)) {
+          stack.unshift(node);
+        }
+      }
+    }
+    return seen;
   }
 
   // this function returns an array of Node values using BFS
-  breadthFirstSearch(start) {}
+  breadthFirstSearch(start) {
+    const seen = [];
+    const stack = [start]
+    let cur;
+
+    while (stack.length > 0) {
+      cur = stack.shift();
+      seen.push(cur.value);
+
+      for (let node of cur.adjacent) {
+        console.log("Seen:", seen);
+        console.log("Stack:", stack);
+        if (!seen.includes(node.value) && !stack.includes(node)) {
+          console.log("Pushing:", node.value);
+          stack.push(node);
+        }
+      }
+    }
+    console.log(seen);
+    return seen;
+  }
 }
 
 module.exports = {Graph, Node}
